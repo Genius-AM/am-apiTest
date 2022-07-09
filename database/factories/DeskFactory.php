@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Task;
+use App\Models\Desk;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Desk>
  */
-class TaskFactory extends Factory
+class DeskFactory extends Factory
 {
     /**
      * @var string
      */
-    protected $model = Task::class;
+        protected $model = Desk::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,8 @@ class TaskFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'name' => $this->faker->name,
-            'card_id' => rand(1, 10),
-        ];
+            return [
+                'name' => $this->faker->name,
+            ];
     }
 }
