@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\DeskController;
+use App\Http\Controllers\Api\DeskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
