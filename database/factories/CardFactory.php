@@ -2,13 +2,16 @@
 
 namespace Database\Factories;
 
+use App\Models\Card;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Dask>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Card>
  */
-class DaskFactory extends Factory
+class CardFactory extends Factory
 {
+    protected $model = Card::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,8 @@ class DaskFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'desk_list_id' => rand(1 ,10),
         ];
     }
 }
