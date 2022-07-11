@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeskListStoreRequest;
 use App\Http\Resources\DeskListResource;
+use App\Models\Desk;
 use App\Models\DeskList;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DeskListController extends Controller
 {
@@ -33,9 +36,11 @@ class DeskListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DeskListStoreRequest $request)
     {
-        //
+        $created_desk_list = DeskList::create($request->validated());
+
+        return new DeskListResource($created_desk_list);
     }
 
     /**
@@ -67,8 +72,10 @@ class DeskListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeskList $deskList)
     {
-        //
+        $deskList->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

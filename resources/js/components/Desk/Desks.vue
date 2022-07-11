@@ -89,7 +89,7 @@ export default {
             if (this.$v.$anyError){
                 return;
             }
-            axios.post('/api/desks' , {
+            axios.post('/api/desks/' , {
                 name: this.name,
 
             })
@@ -99,7 +99,7 @@ export default {
                     this.getAllDesk()
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error.response)
                     if(this.errors.push(error.response.data.errors.name)){
                         this.errors = []
                         this.errors.push(error.response.data.errors.name[0])

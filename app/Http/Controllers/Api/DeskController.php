@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DeskStoreRequest;
 use App\Http\Resources\DeskResource;
 use App\Models\Desk;
+use Illuminate\Http\Response;
 use function redirect;
 
 class DeskController extends Controller
@@ -68,6 +69,6 @@ class DeskController extends Controller
     {
         $desk->delete();
 
-        return response(null,);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
