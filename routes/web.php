@@ -14,4 +14,4 @@ use App\Http\Controllers\SpaController;
 |
 */
 
-Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+Route::get('/{any}', 'App\Http\Controllers\SpaController@index')->where('any', '.*');

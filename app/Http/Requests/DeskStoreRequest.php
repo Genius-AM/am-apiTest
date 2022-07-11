@@ -24,7 +24,14 @@ class DeskStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255'
+            'name' => 'required|max:255|unique:desks,name,'. $this->desk->id
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => 'Доска с этим именем уже сущевствует'
         ];
     }
 }

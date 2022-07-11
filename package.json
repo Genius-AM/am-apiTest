@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "variables": "^1.0.1"
+        "variables": "^1.0.1",
+        "vue-router": "^3.5.4",
+        "vuelidate": "^0.7.7"
     }
 }
