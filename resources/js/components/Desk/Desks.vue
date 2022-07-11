@@ -1,13 +1,15 @@
 <template>
+
     <div class="container">
         <h1>Доски</h1>
         <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status" v-if="loading">
             <span class="visually-hidden">Loading...</span>
         </div>
+
         <form @submit.prevent="addNewDesk">
             <div class="form-group">
-                <label class="col-form-label">Добавление доски</label>
-                    <input type="text" v-model="name" @blur="addNewDesk" placeholder="Введите название доски" class="form-control" :class="{ 'is-invalid': $v.name.$error }">
+                <label class="form-label mt-3">Добавление доски</label>
+                    <input type="text" v-model="name" @blur="addNewDesk" placeholder="Введите название доски" class="form-control " :class="{ 'is-invalid': $v.name.$error }">
                 <div class="invalid-feedback" v-if="!$v.name.required">
                     Обязательное поле
                 </div>
@@ -21,17 +23,19 @@
             </div>
             <button type="button" class="btn btn-primary mb-3">Создать</button>
         </form>
+
         <div class="row">
-            <div class="col-lg-4" v-for="desk in desks">
+            <div class="col-lg-3" v-for="desk in desks">
                 <div class="card mt-3">
                     <router-link class="card-body" :to="{name: 'showDesk', params: {deskId: desk.id }}">
-                        <h4 class="card-title">{{desk.name}}</h4>
+                        <h4 class="card-title d-flex justify-content-between align-items-center" style="color: black">{{desk.name}} <i class="fa-solid fa-trash" type="button" style="font-size: 15px"></i></h4>
                     </router-link>
-                    <button type="submit" class="btn btn-danger mt-3" @click="deleteDesk(desk.id)">Удалить</button>
+                    <button type="submit" class="btn btn-danger" @click="deleteDesk(desk.id)">Удалить</button>
                 </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -57,6 +61,7 @@ export default {
             axios.get('/api/desks')
                 .then(response => {
                     this.desks = response.data.data
+
                 })
                 .catch(error => {
                     console.log(error)

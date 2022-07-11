@@ -4,8 +4,9 @@
     <meta name="viewport"
                 content="width-device-width"
     >
+    <script src="https://kit.fontawesome.com/cf49c793af.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
-   <title>Trello analog</title>
+   <title>Am-task</title>
     <body>
         <div id="app">
             <app></app>

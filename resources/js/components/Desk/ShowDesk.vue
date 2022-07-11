@@ -12,41 +12,52 @@
                 Максимальное количевство символов: {{$v.name.$params.maxLength.max}}
             </div>
         </div>
-
+        <br>
         <form @submit.prevent="addNewDeskList">
+
             <div class="form-group">
                 <label class="col-form-label">Добавление списка</label>
                 <input type="text" v-model="desk_list_name" @blur="addNewDeskList" placeholder="Введите название списка" class="form-control" :class="{ 'is-invalid': $v.desk_list_name.$error }">
                 <div class="invalid-feedback" v-if="!$v.desk_list_name.required">
                     Обязательное поле
                 </div>
+
                 <div class="invalid-feedback" v-if="!$v.desk_list_name.maxLength">
                     Максимальное количевство символов: {{$v.desk_list_name.$params.maxLength.max}}
                 </div>
+
                 <div class="alert alert-danger" role="alert" v-if="errored">
                     Ошибка <br>
                     {{errors[0]}}
                 </div>
             </div>
             <button type="button" class="btn btn-primary mb-3">Создать список</button>
+
         </form>
 
         <div class="row">
             <div class="col-lg-4" v-for="desk_list in desk_lists">
                 <div class="card mt-3">
-                    <a href="" class="card-body">
-                        <h4 class="card-title">{{desk_list.name}}</h4>
-                    </a>
+                    <div class="card-body">
+                        <form @submit.prevent="updateDeskList(desk_list.id, desk_list.name)" v-if="desk_list_input_id == desk_list.id" class="d-flex justify-content-between align-items-center">
+                            <input type="text" v-model="desk_list.name" class="form-control" placeholder="Введите название списка">
+                            <button type="button" @click="desk_list_input_id = null" class="btn-close" aria-label="Close"></button>
+                        </form>
+                        <h4 v-else class="card-title d-flex justify-content-between align-items-center" style="color: rgb(90, 90, 90)" @click="desk_list_input_id = desk_list.id">{{desk_list.name}} <i class="fa-solid fa-pencil" style="cursor: pointer; font-size: 15px;"></i></h4>
+                    </div>
                     <button type="submit" class="btn btn-danger mt-3" @click="deleteDeskList(desk_list.id)">Удалить</button>
                 </div>
             </div>
         </div>
+
         <div class="alert alert-danger" role="alert"  v-if="errored">
-            Error get
+            Ошибка загрузки данных!
         </div>
+
         <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status" v-if="loading">
             <span class="visually-hidden">Loading...</span>
         </div>
+
     </div>
 
 </template>
@@ -65,12 +76,30 @@ export default {
             desk_list_name: null,
             errored: false,
             loading: true,
-            desk_lists: true
+            desk_lists: true,
+            desk_list_input_id: null,
         }
     },
     methods:{
+        updateDeskList(id, name){
+            axios.post('/api/desk-lists/' + id, {
+                _method: 'PUT',
+                name: name
+            })
+                .then(response => {
+                    this.desk_list_input_id = null
+                    this.getDeskList()
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
+                .finally(() =>{
+                    this.loading = false
+                })
+        },
         getDeskList(){
-            axios.get('/api/desk-lists/', {
+            axios.get('/api/desk-lists/' , {
                params: {
                    desk_id: this.deskId
                }
