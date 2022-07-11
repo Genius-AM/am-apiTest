@@ -12,6 +12,8 @@ class Desk extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = ['name'];
+
     public function lists()
     {
         return $this->hasMany(DeskList::class);

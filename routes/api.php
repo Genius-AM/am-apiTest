@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DeskController;
+use App\Http\Controllers\Api\DeskListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resources([
     'desks' => DeskController::class,
+    'desk-lists' => DeskListController::class
 ]);

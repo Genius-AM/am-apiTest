@@ -3,22 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeskStoreRequest;
-use App\Http\Resources\DeskResource;
+use App\Http\Requests\DeskListStoreRequest;
+use App\Http\Resources\DeskListResource;
 use App\Models\Desk;
+use App\Models\DeskList;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use function redirect;
 
-class DeskController extends Controller
+class DeskListController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return DeskResource::collection(Desk::orderBy('created_at', 'desc')->get());
+        $request->validate([
+            'desk_id' => 'required|integer|exists:desks,id'
+        ]);
+
+        return DeskListResource::collection(
+            DeskList::orderBy('created_at', 'desc')
+                ->where('desk_id', $request->desk_id)
+                ->get()
+        );
     }
 
     /**
@@ -27,11 +36,11 @@ class DeskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DeskStoreRequest $request)
+    public function store(DeskListStoreRequest $request)
     {
-        $new_desk = Desk::create( $request->validated());
+        $created_desk_list = DeskList::create($request->validated());
 
-        return new DeskResource($new_desk);
+        return new DeskListResource($created_desk_list);
     }
 
     /**
@@ -40,9 +49,9 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Desk $desk)
+    public function show($id)
     {
-        return new DeskResource($desk);
+        //
     }
 
     /**
@@ -52,11 +61,9 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DeskStoreRequest $request, Desk $desk)
+    public function update(Request $request, $id)
     {
-        $desk->update($request->validated());
-
-        return new DeskResource($desk);
+        //
     }
 
     /**
@@ -65,9 +72,9 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Desk $desk)
+    public function destroy(DeskList $deskList)
     {
-        $desk->delete();
+        $deskList->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
