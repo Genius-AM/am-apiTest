@@ -7,6 +7,7 @@ use App\Http\Resources\CardResource;
 use App\Models\Card;
 use App\Models\Desk;
 use App\Http\Requests\CardStoreRequest;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -40,9 +41,9 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Card $card)
     {
-        //
+        return new CardResource($card);
     }
 
     /**
@@ -52,9 +53,11 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CardStoreRequest $request, Card $card)
     {
-        //
+        $card->update($request->validated());
+
+        return new CardResource($card);
     }
 
     /**
@@ -63,8 +66,10 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Card $card)
     {
-        //
+        $card->delete();
+
+        return response(null, \Illuminate\Http\Response::HTTP_NO_CONTENT);
     }
 }
