@@ -18,6 +18,7 @@ class DeskListResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'created_at' => $this->created_at,
+            'cards' => CardResource::collection($this->cards),
         ];
     }
 }

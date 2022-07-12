@@ -25,7 +25,7 @@ class DeskListStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|',
-           // 'desk_id' => 'required|integer|exists:desks,id'
+            'desk_id' => 'required|integer|exists:desks,id'
         ];
     }
 }

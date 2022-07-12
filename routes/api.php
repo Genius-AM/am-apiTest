@@ -1,7 +1,10 @@
 <?php
-
+//Сюда котроллеры!!
 use App\Http\Controllers\Api\DeskController;
 use App\Http\Controllers\Api\DeskListController;
+use \App\Http\Controllers\Api\CardController;
+use \App\Http\Controllers\Api\TaskController;
+//Сюда библиотеки если понадобится
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resources([
     'desks' => DeskController::class,
-    'desk-lists' => DeskListController::class
+    'desk-lists' => DeskListController::class,
+    'cards' => CardController::class,
+    'tasks' => TaskController::class
 ]);

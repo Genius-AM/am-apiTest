@@ -12,7 +12,7 @@ import App from "./components/App";
 import Home from "./components/Home";
 import Desks from "./components/Desk/Desks";
 import ShowDesk from "./components/Desk/ShowDesk";
-import AddDesk from "./components/modal/AddDesk";
+
 
 
 const router = new VueRouter({

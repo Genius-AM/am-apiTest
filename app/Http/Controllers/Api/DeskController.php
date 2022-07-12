@@ -4,21 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeskStoreRequest;
+use App\Http\Resources\CardResource;
 use App\Http\Resources\DeskResource;
+use App\Models\Card;
 use App\Models\Desk;
 use Illuminate\Http\Response;
-use function redirect;
 
 class DeskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return DeskResource::collection(Desk::orderBy('created_at', 'desc')->get());
+        return DeskResource::collection(
+            Desk::orderBy('created_at', 'desc')
+                ->get());
     }
 
     /**
