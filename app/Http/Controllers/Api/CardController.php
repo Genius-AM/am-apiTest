@@ -3,25 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeskStoreRequest;
 use App\Http\Resources\CardResource;
-use App\Http\Resources\DeskResource;
 use App\Models\Card;
 use App\Models\Desk;
-use Illuminate\Http\Response;
+use App\Http\Requests\CardStoreRequest;
+use Illuminate\Http\Request;
 
-class DeskController extends Controller
+class CardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return DeskResource::collection(
-            Desk::orderBy('created_at', 'desc')
-                ->get());
+        //
     }
 
     /**
@@ -30,11 +27,11 @@ class DeskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DeskStoreRequest $request)
+    public function store(CardStoreRequest $request)
     {
-        $new_desk = Desk::create( $request->validated());
+        $new_card = Card::create($request->validated());
 
-        return new DeskResource($new_desk);
+        return new CardResource($new_card);
     }
 
     /**
@@ -43,9 +40,9 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Desk $desk)
+    public function show($id)
     {
-        return new DeskResource($desk);
+        //
     }
 
     /**
@@ -55,11 +52,9 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DeskStoreRequest $request, Desk $desk)
+    public function update(Request $request, $id)
     {
-        $desk->update($request->validated());
-
-        return new DeskResource($desk);
+        //
     }
 
     /**
@@ -68,10 +63,8 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Desk $desk)
+    public function destroy($id)
     {
-        $desk->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
+        //
     }
 }

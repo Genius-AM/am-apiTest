@@ -12,4 +12,10 @@ class DeskList extends Model
     use SoftDeletes;
 
     protected $fillable = ['name', 'desk_id'];
+
+    public function cards()
+    {
+        return $this->hasMany(Card::class);
+    }
+
 }

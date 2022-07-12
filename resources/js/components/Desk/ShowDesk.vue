@@ -44,8 +44,23 @@
                             <button type="button" @click="desk_list_input_id = null" class="btn-close" aria-label="Close"></button>
                         </form>
                         <h4 v-else class="card-title d-flex justify-content-between align-items-center" style="color: rgb(90, 90, 90)" @click="desk_list_input_id = desk_list.id">{{desk_list.name}} <i class="fa-solid fa-pencil" style="cursor: pointer; font-size: 15px;"></i></h4>
+                        <button type="submit" class="btn btn-danger mt-3" @click="deleteDeskList(desk_list.id)">Удалить</button>
+                        <div class="card mt-3 bg-light" v-for="card in desk_list.cards" :key="card.id">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex justify-content-between align-items-center">{{card.name}}</h4>
+                                <button type="button" class="btn btn-secondary mt-3">Удалить</button>
+                            </div>
+                        </div>
+                        <form @submit.prevent="addNewCard(desk_list.id)" class="d-flex justify-content-between align-items-center mt-3">
+                            <input type="text" v-model="card_names[desk_list.id]" :class="{ 'is-invalid': $v.card_names.$each[desk_list.id].$error }" class="form-control" placeholder="Введите название карточки">
+                            <div class="invalid-feedback" v-if="!$v.card_names.$each[desk_list.id].required">
+                                Обязательное поле
+                            </div>
+                            <div class="invalid-feedback" v-if="!$v.card_names.$each[desk_list.id].maxLength">
+                                Максимальное количевство символов: {{$v.card_names.$each[desk_list.id].$params.maxLength.max}}
+                            </div>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-danger mt-3" @click="deleteDeskList(desk_list.id)">Удалить</button>
                 </div>
             </div>
         </div>
@@ -78,9 +93,29 @@ export default {
             loading: true,
             desk_lists: true,
             desk_list_input_id: null,
+            card_names: [],
         }
     },
     methods:{
+        addNewCard(desk_list_id){
+            this.$v.card_names.$each[desk_list_id].$touch()
+            if (this.$v.card_names.$each[desk_list_id].$anyError){
+                return;
+            }
+            axios.post('/api/cards/' , {
+                name: this.card_names[desk_list_id],
+                desk_list_id
+            })
+                .then(response => {
+                    this.card_names[desk_list_id] = ''
+                    this.getDeskList()
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
+
+        },
         updateDeskList(id, name){
             axios.post('/api/desk-lists/' + id, {
                 _method: 'PUT',
@@ -106,6 +141,9 @@ export default {
             })
                 .then(response => {
                     this.desk_lists = response.data.data
+                    this.desk_lists.forEach(el => {
+                        this.card_names[el.id] = ''
+                    })
                 })
                 .catch(error => {
                     console.log(error)
@@ -116,8 +154,8 @@ export default {
                 })
         },
         saveName(){
-            this.$v.$touch()
-            if (this.$v.$anyError){
+            this.$v.name.$touch()
+            if (this.$v.name.$anyError){
                 return
             }
             axios.post('/api/desks/' + this.deskId, {
@@ -203,6 +241,12 @@ export default {
         desk_list_name: {
             required,
             maxLength: maxLength(255)
+        },
+        card_names: {
+            $each: {
+                required,
+                maxLength: maxLength(255)
+            }
         }
     }
 }
