@@ -336,10 +336,6 @@ export default {
                 })
         },
         addNewDeskList(){
-            this.$v.$touch()
-            if (this.$v.$anyError){
-                return;
-            }
             axios.post('/api/desk-lists' , {
                 name: this.desk_list_name,
                 desk_id: this.deskId,
