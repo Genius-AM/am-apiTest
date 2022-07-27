@@ -28,7 +28,7 @@
             <div class="col-lg-3" v-for="desk in desks">
                 <div class="card mt-3">
                     <router-link class="card-body" :to="{name: 'showDesk', params: {deskId: desk.id }}">
-                        <h4 class="card-title d-flex justify-content-between align-items-center" style="color: black">{{desk.name}} <i class="fa-solid fa-trash" type="button" style="font-size: 15px"></i></h4>
+                        <h4 class="card-title d-flex justify-content-between align-items-center" style="color: black;">{{desk.name}}</h4>
                     </router-link>
                     <button type="submit" class="btn btn-danger" @click="deleteDesk(desk.id)">Удалить</button>
                 </div>

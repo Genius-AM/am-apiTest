@@ -222,7 +222,7 @@ export default {
                 .then(response => {
                     this.show_card_name_input = false
                     this.getDeskList()
-                    // this.$v.reset()
+                     this.$v.reset()
                 })
                 .catch(error => {
                     console.log(error)
@@ -241,7 +241,7 @@ export default {
                 })
         },
         deleteCard(id){
-            if(confirm('Вы хотите удалить card?')){
+            if(confirm('Вы хотите удалить')) {
                 axios.post('/api/cards/' + id , {
                     _method: 'DELETE',
                 })
@@ -336,10 +336,6 @@ export default {
                 })
         },
         addNewDeskList(){
-            this.$v.$touch()
-            if (this.$v.$anyError){
-                return;
-            }
             axios.post('/api/desk-lists' , {
                 name: this.desk_list_name,
                 desk_id: this.deskId,

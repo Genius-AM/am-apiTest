@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeskStoreRequest;
-use App\Http\Resources\CardResource;
 use App\Http\Resources\DeskResource;
-use App\Models\Card;
 use App\Models\Desk;
 use Illuminate\Http\Response;
 
